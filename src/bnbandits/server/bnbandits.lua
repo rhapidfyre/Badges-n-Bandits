@@ -59,10 +59,10 @@ AddEventHandler('bb:init', function()
       print(GetPlayerName(client).." ("..client..") ^1Failed to Validate^7. "..
         "They can still play but their stats will not be saved."
       )
-      TriggerClientEvent('chat:addMessage', client, {color = {255,0,0}, multiline = true,
+      --[[TriggerClientEvent('chat:addMessage', client, {color = {255,0,0}, multiline = true,
         args = {"LOGIN ERROR", "No credentials found (Steam, RedM, Social Club). "..
         "You can still play, however your session won't be saved."}
-      })
+      })]]
     end
     TriggerEvent('bb:initPlayer', client, data)
     TriggerClientEvent('bb:initPlayer', client, data)
