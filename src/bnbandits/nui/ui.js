@@ -1,13 +1,13 @@
 
 $(function() {
 	
-	var menu = $("#main-menu");
+	var hud = $("#hud-main");
 	
 	window.addEventListener('message', function(event) {
 		
 		var item = event.data;
-		if (item.showmenu) { menu.show(); }
-		if (item.hidemenu) { menu.hide(); }
+		if (item.showmenu) { hud.show(); }
+		if (item.hidemenu) { hud.hide(); }
     
 	});
 	
@@ -21,5 +21,5 @@ $(function() {
 });
 
 function ExitMenu() {
-	$.post('http://bb/MainMenu', JSON.stringify({action:"exit"}));
+	$.post('http://bnbandits/MainMenu', JSON.stringify({exit:true}));
 }

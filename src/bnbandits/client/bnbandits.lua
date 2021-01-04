@@ -1,46 +1,37 @@
 
--- This file contains all base gamemode operations (enable pvp, rich presence, exports, etc
+-- This file contains all base gamemode operations (enable pvp, rich presence, exports, etc)
 
--- Discord Rich Presence
+--  Independent startup stuff (init/no dependency)
 Citizen.CreateThread(function()
+  
+  -- Enable PVP
+  Citizen.Wait(1000) 
+  Citizen.InvokeNative(0xF808475FA571D823, true)
+	SetCanAttackFriendly(PlayerPedId(), true, false)
+	NetworkSetFriendlyFireOption(true)
+  SetRelationshipBetweenGroups(5, `PLAYER`, `PLAYER`)
+  
+  if Config.RevealMap() > 0 then
+    Citizen.InvokeNative(0x4B8F743A4A6D2FF8, true)
+  end
+  
+  -- Discord  Rich Presence
 	while true do
 		SetDiscordAppId(611712266164895744) -- Discord app id
 		SetDiscordRichPresenceAsset('Badges & Bandits') -- Big picture asset name
     SetDiscordRichPresenceAssetText('Badges & Bandits') -- Big picture hover text
     SetDiscordRichPresenceAssetSmall('bb_logo') -- Small picture asset name
-    SetDiscordRichPresenceAssetSmallText('RedM: Badges & Bandits') -- Small picture hover text
+    SetDiscordRichPresenceAssetSmallText('RedM: Badges n' Bandits') -- Small picture hover text
 		Citizen.Wait(300000) -- Update every 5 minutes
 	end
 end)
 
 
---- EXPORT GetClosestPlayer()
--- Finds the closest player
--- @return Player local ID. nil if client's alone
-function GetClosestPlayer()
-	local ped  = PlayerPedId()
-	local plys = GetActivePlayers()
-  local myPos = GetEntityCoords(ped)
-	local cPly = 0
-	local cDist = 120.0
-	for k,v in pairs (plys) do
-		local tgt = GetPlayerPed(v)
-		if tgt ~= ped then
-			local dist = #(myPos - GetEntityCoords(tgt))
-			if dist < cDist then
-				cPly = v
-				cDist = dist
-			end
-		end
-	end
-	return cPly
-end
-
--- Enable PVP
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-		--SetCanAttackFriendly(PlayerPedId(), true, false)
-		NetworkSetFriendlyFireOption(true)
-	end
+-- Establish server connection
+CreateThread(function()
+  DoScreenFadeOut(0)
+  while not IsScreenFadedOut() do Wait(1) end
+  while not NetworkIsPlayerActive(PlayerId()) do Wait(1) end
+  NetworkSetVoiceActive(true)
+  TriggerServerEvent('bb:init')
 end)

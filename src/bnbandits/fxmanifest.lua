@@ -10,22 +10,29 @@ game "rdr3"
 
 resource_type 'gametype' { name = 'Badges & Bandits'}
 
-client_scripts {"ent_enum.lua","client/*.lua"}
-server_scripts {"server/*.lua"}
+client_scripts {"ent_enum.lua","client/lib/*.lua","client/lang/*.lua","client/*.lua"}
+shared_scripts {"shared/lib/*.lua","shared/lang/*.lua","shared/*.lua"}
+server_scripts {"config.lua","server/lib/*.lua","server/lang/*.lua","server/*.lua"}
 
 ui_page "nui/ui.html"
 
 file {
-	"nui/ui.css",
-	"nui/ui.js",
-	"nui/ui.html"
+	"nui/ui.css", "nui/hud.css", "nui/motd.css", "nui/creator.css",
+	"nui/ui.js",	"nui/ui.html"
 }
 
 server_exports {
   'UniqueId',               -- The UniqueID of the Player
+  'WantedLevel',
+  'IsLawman',
+  'PlayerScore',
+  
   'GetPlayerByUniqueId',    -- Returns > 0 if unique ID is currently playing
 }
 
 exports {
   'UniqueId',               -- The UID of the player ID given (of the client if nil)
+  'WantedLevel',
+  'IsLawman',
+  'PlayerScore',
 }
