@@ -18,10 +18,10 @@ Citizen.CreateThread(function()
   -- Discord  Rich Presence
 	while true do
 		SetDiscordAppId(611712266164895744) -- Discord app id
-		SetDiscordRichPresenceAsset('Badges & Bandits') -- Big picture asset name
-    SetDiscordRichPresenceAssetText('Badges & Bandits') -- Big picture hover text
+		SetDiscordRichPresenceAsset("RedM: Badges & Bandits") -- Big picture asset name
+    SetDiscordRichPresenceAssetText("RedM: Badges & Bandits") -- Big picture hover text
     SetDiscordRichPresenceAssetSmall('bb_logo') -- Small picture asset name
-    SetDiscordRichPresenceAssetSmallText('RedM: Badges n' Bandits') -- Small picture hover text
+    SetDiscordRichPresenceAssetSmallText("RedM: Badges n' Bandits") -- Small picture hover text
 		Citizen.Wait(300000) -- Update every 5 minutes
 	end
 end)

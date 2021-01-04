@@ -9,7 +9,7 @@ end
 
 
 function BB.Initialize(myUID)
-  while not BB then
+  while not BB do
     print("^1BB Metatable didn't exist... ^7Waiting.")
     Wait(5000)
   end
