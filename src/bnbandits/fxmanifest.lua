@@ -10,7 +10,7 @@ game "rdr3"
 
 resource_type 'gametype' { name = 'Badges & Bandits'}
 
-client_scripts {"ent_enum.lua","client/lib/*.lua","client/lang/*.lua","client/*.lua"}
+client_scripts {"config.lua","ent_enum.lua","client/lib/*.lua","client/lang/*.lua","client/*.lua"}
 shared_scripts {"shared/lib/*.lua","shared/lang/*.lua","shared/*.lua"}
 server_scripts {"config.lua","server/lib/*.lua","server/lang/*.lua","server/*.lua"}
 
