@@ -1,16 +1,36 @@
 
+function GetPlayerInformation(ply)
+  local plyInfo = GetPlayerIdentifiers(ply)
+  local infoTable = {
+    ['steam'] = "", ['social']  = "",
+    ['fivem'] = "", ['discord'] = "",
+    ['ip']    = GetPlayerEndpoint(ply),
+    -- Removes all non alphanumeric characters
+    ['user']  = string.gsub(GetPlayerName(ply), "[%W]", "")
+  }
+  for k,id in pairs (plyInfo) do
+    print(k, id)
+    if string.sub(id, 1, string.len("steam:")) == "steam:" then
+      infoTable['steam'] = id
+    elseif string.sub(id, 1, string.len("license:")) == "license:" then
+      infoTable['social'] = id
+    elseif string.sub(id, 1, string.len("five:")) == "five:" then
+      infoTable['fivem'] = id
+    elseif string.sub(id, 1, string.len("discord:")) == "discord:" then
+      infoTable['discord'] = id
+    end
+  end
+  return infoTable
+end
+
 -- Connection Verification
 AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
 
   local client = source
 	deferrals.defer()
-	deferrals.update("Connecting to: 5M Cops n' Robbers")
+	deferrals.update("Connecting to: Badges n' Bandits")
   
   local ids = GetPlayerInformation(ply)
-  
-  for k,v in pairs (ids) do 
-    print(k, v)
-  end
   
   --[[ Create new player account/ban check prior to them even connecting to the game
   local uid = CNR.SQL.RSYNC(
