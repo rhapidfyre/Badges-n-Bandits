@@ -4,7 +4,7 @@ RegisterNetEvent('bnb:respawn')
 
 function RespawnPlayer(usePos)
   local findSpawn = nil
-  if usePos or #BB.spawns > 0 then
+  if usePos or #BB.spawns < 1 then
     findSpawn = GetEntityCoords(PlayerPedId())
     if Config.debugging then print("Respawning at player's current position.") end
   else
@@ -20,7 +20,7 @@ function RespawnPlayer(usePos)
   ShutdownLoadingScreen()
   NetworkResurrectLocalPlayer(findSpawn.x, findSpawn.y, findSpawn.z, math.random(359))
   local ped = PlayerPedId()
-  SetEntityCoordsNoOffset(ped, findspawn.x, findSpawn.y, findSpawn.z, false, false, false, true)
+  SetEntityCoordsNoOffset(ped, findSpawn.x, findSpawn.y, findSpawn.z, false, false, false, true)
   FreezeEntityPosition(ped, false)
   SetPlayerInvincible(ped, false)
   SetEntityVisible(ped, true)

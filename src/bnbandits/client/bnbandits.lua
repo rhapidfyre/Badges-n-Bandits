@@ -10,6 +10,11 @@ Citizen.CreateThread(function()
 	NetworkSetFriendlyFireOption(true)
   SetRelationshipBetweenGroups(5, `PLAYER`, `PLAYER`)
   
+  while not Config do
+    print("Metatable not ready. Waiting 1 second and trying again.")
+    Wait(1000)
+  end
+  
   if Config.RevealMap() > 0 then
     Citizen.InvokeNative(0x4B8F743A4A6D2FF8, true)
   end
