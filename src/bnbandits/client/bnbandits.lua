@@ -7,7 +7,6 @@ Citizen.CreateThread(function()
   -- Enable PVP
   Citizen.Wait(1000) 
   Citizen.InvokeNative(0xF808475FA571D823, true)
-	SetCanAttackFriendly(PlayerPedId(), true, false)
 	NetworkSetFriendlyFireOption(true)
   SetRelationshipBetweenGroups(5, `PLAYER`, `PLAYER`)
   
@@ -32,6 +31,5 @@ CreateThread(function()
   DoScreenFadeOut(0)
   while not IsScreenFadedOut() do Wait(1) end
   while not NetworkIsPlayerActive(PlayerId()) do Wait(1) end
-  NetworkSetVoiceActive(true)
   TriggerServerEvent('bb:init')
 end)
