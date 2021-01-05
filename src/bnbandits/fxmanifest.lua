@@ -11,14 +11,20 @@ game "rdr3"
 dependency 'ghmattimysql'
 resource_type 'gametype' { name = 'Badges & Bandits'}
 
-client_scripts {"ent_enum.lua","client/lib/*.lua","client/lang/*.lua","client/*.lua"}
-shared_scripts {"config.lua","shared/lib/*.lua","shared/lang/*.lua","shared/*.lua"}
-server_scripts {"server/lib/*.lua","server/lang/*.lua","server/*.lua"}
+client_scripts {
+  "ent_enum.lua","client/lib/*.lua","client/lang/*.lua","client/*.lua"
+}
+shared_scripts {
+  "config.lua","shared/lib/*.lua","shared/lang/*.lua","shared/*.lua"
+}
+server_scripts {
+  "server/lib/*.lua","server/lang/*.lua","server/*.lua"
+}
 
 ui_page "nui/ui.html"
 
 file {
-	"nui/ui.css", "nui/hud.css", "nui/motd.css", "nui/creator.css",
+	"nui/ui.css", "nui/hud.css", "nui/motd.css", "nui/creator.css", "nui/wanted.css",
 	"nui/ui.js",	"nui/ui.html"
 }
 

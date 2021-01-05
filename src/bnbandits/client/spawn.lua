@@ -66,9 +66,11 @@ Citizen.CreateThread(function()
 	end
 end)
 
-AddEventHandler('bb:initPlayer', function(myUID)
+AddEventHandler('bb:initPlayer', function(data)
+  RespawnPlayer(data.idUnique)
   BB.Initialize(myUid)
-  RespawnPlayer()
+  TriggerEvent('bb:loaded')
+  TriggerServerEvent('bb:loaded')
 end)
 
 AddEventHandler('bb:respawn', RespawnPlayer)

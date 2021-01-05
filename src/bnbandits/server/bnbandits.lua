@@ -34,7 +34,7 @@ end
 -- @param client The Player's Server ID
 function UniqueId(client)
   if client then
-
+    
     -- If no meta, build meta. If uid exists in meta, return it
     if not BB.Player[client] then BB.Player[client] = {} end
 
@@ -61,7 +61,25 @@ local function InitializePlayer(client)
     return false, "No ID given to InitializePlayer()"
   end
   local uid = UniqueId(client)
+  
+  BB.SetWanted(client)
+  
+  -- If UID does not exist, return a single playable session
   if not uid then return true, 0 end
+  
+  -- If UID exists, initialize information
+  CreateThread(function()
+    local existingWL = BB.SQL.RSYNC("SELECT wanted FROM player WHERE id = @u", {['u'] = uid})
+    if existingWL then 
+      BB.SetWanted(client, existingWL)
+    end
+  end)
+  
+  local lastPos = BB.SQL.QUERY("SELECT x,y,z FROM player WHERE id = @u",{['u'] = uid})
+  if lastPos[1] then
+    BB.Player[client].lastPos = vector3(lastPos[1]['x'],lastPos[1]['y'],lastPos[1]['z'])
+  end
+  
   return true, uid
 end
 
@@ -73,19 +91,18 @@ AddEventHandler('bb:init', function()
   if isReady then
     if Config.verbose then
       print(GetPlayerName(client).." ("..client..
-      ") is ready to play! (Unique ID = "..data..")")
+      ") is ready to play! (Unique ID = "..(data.idUnique)..")")
     end
-    if data < 1 then
+    if data.idUnique < 1 then
       print(GetPlayerName(client).." ("..client..") ^1Failed to Validate^7. "..
-        "They can still play but their stats will not be saved."
+        "They can still play, but their stats will not be saved."
       )
-      --[[TriggerClientEvent('chat:addMessage', client, {color = {255,0,0}, multiline = true,
-        args = {"LOGIN ERROR", "No credentials found (Steam, RedM, Social Club). "..
-        "You can still play, however your session won't be saved."}
-      })]]
     end
-    TriggerEvent('bb:initPlayer', client, data)
-    TriggerClientEvent('bb:initPlayer', client, data)
-  else DropPlayer(client, data)
+  else
+    print(GetPlayerName(client).." ("..client..") ^1Failed to Validate^7. "..
+      "They can still play, but their stats will not be saved."
+    )
   end
+  TriggerEvent('bb:initPlayer', client, data)
+  TriggerClientEvent('bb:initPlayer', client, data)
 end)
