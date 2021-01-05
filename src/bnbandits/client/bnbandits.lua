@@ -1,5 +1,9 @@
 
 -- This file contains all base gamemode operations (enable pvp, rich presence, exports, etc)
+RegisterCommand('menus', function()
+  TriggerEvent('bb:nui_rescue')
+  SetNuiFocus(false)
+end)
 
 --  Independent startup stuff (init/no dependency)
 Citizen.CreateThread(function()

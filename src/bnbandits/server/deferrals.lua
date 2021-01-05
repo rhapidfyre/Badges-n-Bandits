@@ -48,8 +48,6 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
       "SELECT perms,ban_time,ban_reason FROM players WHERE id = @uid",
       {['uid'] = uid}
     )
-    
-    print(json.encode(banInfo[1]))
 
     -- if bantime is set, it's a temp ban
     if banInfo[1]['ban_time'] > 0 then

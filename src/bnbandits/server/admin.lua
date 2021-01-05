@@ -3,6 +3,7 @@ RegisterServerEvent('bbadmin:check')
 RegisterServerEvent('bb:loaded')
 RegisterServerEvent('bbadmin:teleport')
 RegisterServerEvent('bbadmin:mypos')
+RegisterServerEvent('bbadmin:giveweapon')
 
 
 --- BlockAction()
@@ -118,5 +119,25 @@ AddEventHandler('bbadmin:mypos', function(pos)
   TriggerClientEvent('chat:addMessage', client, {color={255,180,0}, multiline = true, args = {
     "POSITION", "X("..(string.format("%.2f", pos.x))..") Y("..(string.format("%.2f", pos.y))..") Z("..(string.format("%.2f", pos.z))..")"
   }})
+end)
+
+
+AddEventHandler('bbadmin:giveweapon', function(target, weapon, ammoCount)
+  local client = source
+  if CanUseCommand(client, 'giveweapon') then
+
+    if not target or not weapon then return 0 end
+      
+    if not GetPlayerName(target) then
+      TriggerClientEvent('chat:addMessage', client, {color={255,0,0},multiline=true,args={
+        "INVALID PLAYER", "Player #"..target.." does not exist or has disconnected."
+      }})
+      return false
+    end
+    
+    if not ammoCount then ammoCount = 48 end
+    TriggerClientEvent('bbadmin:cl_giveweapon', target, weapon, ammoCount)
+    
+  end
 end)
 

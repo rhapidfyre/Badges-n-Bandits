@@ -6,7 +6,9 @@ function RespawnPlayer(usePos)
   local findSpawn = nil
   if usePos or #BB.spawns < 1 then
     findSpawn = GetEntityCoords(PlayerPedId())
-    if Config.debugging then print("Respawning at player's current position.") end
+    if usePos then findSpawn = usePos end
+    if Config.debugging and not usePos then print("Respawning at player's current position.") end
+    if Config.debugging and usePos then print("Respawning at provided location.") end
   else
     repeat
       local n = math.random( #BB.spawns )
@@ -67,6 +69,23 @@ Citizen.CreateThread(function()
 end)
 
 AddEventHandler('bb:initPlayer', function(idUnique, lastPosition)
+  if lastPosition then
+    if Config.debugging then print("Restoring previous location.") end
+    if type(lastPosition) == "table" then 
+      if Config.debugging then
+        print("Last known position was a table. Vectorizing...")
+      end
+      local temp = vector3(lastPosition.x, lastPosition.y, lastPosition.z)
+      lastPosition = temp
+    elseif type(lastPosition) ~= "vector3" then
+      if Config.debugging then
+        print("Last known location was invalid. Ignoring.")
+      end
+      lastPosition = nil
+    end
+  else
+    if Config.debugging then print("No previous location found.") end
+  end
   RespawnPlayer(lastPosition)
   BB.Initialize(idUnique)
   TriggerEvent('bb:loaded')
