@@ -1,12 +1,12 @@
 
-
 local ranks = {
-  ['Player']    = 0,  -- REQUIRED RANK
-  ['Moderator'] = 1,  -- REQUIRED RANK
-  ['Admin']     = 2,  -- REQUIRED RANK
-  ['Manager']   = 3,
-  ['Server']    = 4,  -- REQUIRED RANK
-},
+  ['Player']        = 0,  -- REQUIRED RANK
+  ['Moderator']     = 1,  -- REQUIRED RANK
+  ['Admin']         = 2,  -- REQUIRED RANK
+  ['Superadmin']    = 3,
+  ['Server']        = 4,  -- REQUIRED RANK
+}
+
 local commands = {
   ['aclear']            = 'Admin',   -- Clear all player's chatbox completely
   ['setname']           = 'Admin',   -- Forces the players name to Firstname Lastname
@@ -59,7 +59,7 @@ local commands = {
 
 
 function AdminCommandLevel(cmd)
-  local aLevel = 4
+  local aLevel = 3
   if commands[cmd] then
     local temp = commands[cmd]
     if ranks[temp] then

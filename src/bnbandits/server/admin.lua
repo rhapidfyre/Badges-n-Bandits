@@ -25,8 +25,10 @@ local function CanUseCommand(client, cmd)
   if client < 1 then return true end
   if not cmd then return false end
   if AdminLevel(client) >= AdminCommandLevel(cmd) then
+    print("DEBUG - Command Authorized ("..GetPlayerName(client)..": "..cmd..")")
     return true
   end
+  print("DEBUG - Command Denied ("..GetPlayerName(client)..": "..cmd..")")
   return false
 end
 
@@ -48,6 +50,7 @@ end
 
 
 local function CheckAdmin(client)
+  print("DEBUG - Checking if Player #"..tostring(client).." is Server Staff...")
   if not client then return false end
   local uid    = UniqueId(client)
   local aLevel = BB.SQL.RSYNC(
@@ -70,6 +73,22 @@ AddEventHandler('bbadmin:check', function() CheckAdmin(source) end)
 AddEventHandler('bbadmin:teleport', function(tpType, data)
   local client = source
   if CanUseCommand(client, 'teleport') then
-    print(tpType, data)
+    if tpType == 'marker' then
+      ConsolePrint(GetPlayerName(client).." ("..client..
+        ") teleported to X:"..(string.format("%.2f", data.x))..
+        ", Y:"..(string.format("%.2f", data.y)), 2
+      )
+    end
+    TriggerClientEvent('bbadmin:cl_teleport', client, tpType, data)
+  else print("DEBUG - Command denied for player #"..client)
+  end
+end)
+
+
+CreateThread(function()
+  Citizen.Wait(3000)
+  local plys = GetPlayers()
+  for _,i in ipairs(plys) do
+    CheckAdmin(tonumber(i))
   end
 end)

@@ -4,8 +4,28 @@ RegisterServerEvent('bb:init')
 local useDiscord = false  -- Toggles discord messages created by this script
 
 
-local function AssignUniqueId(client)
+function ConsolePrint(message, warnLevel)
+  local dt = os.date("%X", os.time())
+  if warnLevel then
+    if warnLevel < 2 then     print("^4["..dt.." - GAME] ^7"..message.."^7")
+    elseif warnLevel < 3 then print("^3["..dt.." - WARN] ^7"..message.."^7")
+    else                      print("^1["..dt.." - ERR]  ^7"..message.."^7")
+    end
+  else print("^7["..dt.." - GAME] "..message.."^7")
+  end
+end
 
+local function AssignUniqueId(client)
+  
+  local ids = GetPlayerInformation(client)
+  
+  local uid = BB.SQL.RSYNC(
+    "SELECT GetAccount (@steam, @license, @discord, @ip, @user)", ids
+  )
+  
+  if uid then return uid end
+  return nil
+  
 end
 
 

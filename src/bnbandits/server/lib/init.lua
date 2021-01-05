@@ -14,7 +14,7 @@ BB.SQL = {
     -- Executes 'cb' (callback) function on result with result as argument
     -- Script doesn't wait for a response/result
     EXECUTE = function(query,tbl,cb)
-      if not query then return error("No querystring given to CNR.SQL.") end
+      if not query then return error("No querystring given to BB.SQL.") end
       if not tbl then tbl = {} end
       exports['ghmattimysql']:execute(query, tbl,
         function(result) if cb then cb(result) end end
@@ -24,7 +24,7 @@ BB.SQL = {
     -- As EXECUTE
     -- Script waits for a response
     QUERY = function(query,tbl)
-      if not query then return error("No querystring given to CNR.SQL.") end
+      if not query then return error("No querystring given to BB.SQL.") end
       if not tbl then tbl = {} end
       return ( exports['ghmattimysql']:executeSync(query, tbl) )
     end,
@@ -33,7 +33,7 @@ BB.SQL = {
     -- Executes 'cb' (callback) function on result with result as argument
     -- Runs without waiting on a return
     SCALAR = function(query,tbl,cb)
-      if not query then return error("No querystring given to CNR.SQL.") end
+      if not query then return error("No querystring given to BB.SQL.") end
       if not tbl then tbl = {} end
       exports['ghmattimysql']:scalar(query, tbl,
         function(result) if cb then cb(result) end end
@@ -43,7 +43,7 @@ BB.SQL = {
     -- As SCALAR
     -- Script waits for a response
     RSYNC = function(query,tbl)
-      if not query then return error("No querystring given to CNR.SQL.") end
+      if not query then return error("No querystring given to BB.SQL.") end
       if not tbl then tbl = {} end
       return ( exports['ghmattimysql']:scalarSync(query, tbl) )
     end
