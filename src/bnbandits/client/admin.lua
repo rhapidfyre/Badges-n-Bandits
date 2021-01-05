@@ -49,3 +49,9 @@ AddEventHandler('bbadmin:cl_teleport', function(tpType, data)
   else print("Event 'bbadmin:cl_teleport' received illegitimately")
   end
 end)
+
+
+RegisterCommand('mypos', function(s,a,r)
+  TriggerServerEvent('bbadmin:mypos', GetEntityCoords(PlayerPedId()))
+end)
+

@@ -2,6 +2,7 @@
 RegisterServerEvent('bbadmin:check')
 RegisterServerEvent('bb:loaded')
 RegisterServerEvent('bbadmin:teleport')
+RegisterServerEvent('bbadmin:mypos')
 
 
 --- BlockAction()
@@ -91,31 +92,31 @@ RegisterCommand('setwanted', function(s,a,r)
 
     local target, wLevel
 
-    if s == 0 then
-      if not a[1] and not a[2] then
-        ConsolePrint("Improper Usage of Command 'setwanted': /setwanted <ID> <Points>", 3)
-        return 0
-      end
+    if not a[1] and not a[2] then
+      ConsolePrint("Improper Usage of Command 'setwanted': /setwanted <ID> <Points>", 3)
+      return 0
     end
-
-    -- If no arguments, set self as Innocent (0)
-    if not a[1] and s ~= 0 then
-      target = s; wLevel = 0
+    target = tonumber(a[1])
+    wLevel = tonumber(a[2])
+      
+    if not GetPlayerName(target) then
+      print("No such player exists.")
+      return false
     end
-
-    -- If no target (if not a2, then a2 is a1), use self
-    if not a[2] then
-      target = tonumber(a[1])
-      wLevel = 0
-
-    -- If a1 and a2, then good to go
-    else
-      target = tonumber(a[1])
-      wLevel = tonumber(a[2])
-
+    
+    if Config.verbose then
+      ConsolePrint("Setting WP to ^3"..wLevel.."^7 for player "..(BB.Player[target].I))
     end
-
     BB.SetWanted(target, wLevel)
 
   end
 end)
+
+
+AddEventHandler('bbadmin:mypos', function(pos)
+  local client = source
+  TriggerClientEvent('chat:addMessage', client, {color={255,180,0}, multiline = true, args = {
+    "POSITION", "X("..(string.format("%.2f", pos.x))..") Y("..(string.format("%.2f", pos.y))..") Z("..(string.format("%.2f", pos.z))..")"
+  }})
+end)
+

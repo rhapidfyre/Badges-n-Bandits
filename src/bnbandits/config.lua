@@ -1,9 +1,9 @@
 Config = {}
 Config.debugging = true
 
-Config.reduceTimer    = 60        -- Number of seconds per wanted point reduction
-Config.reducePoints   = 1.25      -- Number of wanted points to lose per above seconds
-Config.levelDivision  = 10       -- Points per wanted level (10 = every 10 points is 1 wanted level)
+Config.reduceTimer    = 30    -- Number of seconds per wanted point reduction
+Config.reducePoints   = 25    -- Number of wanted points to lose per above seconds
+Config.levelDivision  = 100   -- Points per wanted level (10 = every 10 points is 1 wanted level)
 
 -- Always true if in debugging mode
 Config.verbose   = Config.debugging or ( false )

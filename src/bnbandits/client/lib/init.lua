@@ -6,7 +6,7 @@ BB.inmates  = {}
 BB.scores   = {}
 BB.admins   = {}
 
-BB.keys = {
+KEYS = {
   -- Letters
   ["A"] = 0x7065027D,
   ["B"] = 0x4CC0E2FE,

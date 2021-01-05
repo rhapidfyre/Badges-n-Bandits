@@ -1,0 +1,83 @@
+
+@keyframes blink {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+#wrap {
+	width: 25%;
+	height: 90%;
+	margin-top: 2%;
+	margin-left: 2%;
+	/* box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16), 0px 2px 10px 0px rgba(0, 0, 0, 0.12); */
+    color: rgba(255, 255, 255, 0.9);
+	/* background-color: rgba(7, 7, 7, 0.5); Table Heading Background Color */
+	background-image: url("img/bgPanel.png");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	display: flex;
+	flex-direction: column;
+}
+
+#wrap table {
+	text-align: left;
+}
+
+#wrap th, td {
+	padding-left: 20px;
+  font-size: 1.0vw;
+}
+
+#wrap th {
+	padding-top: 10px;
+	height: 40px;
+  color: red !important;
+}
+
+#wrap tr {
+	font-size: 120%;
+	font-family: 'Crock';
+  color: white;
+}
+
+#wrap tr.heading {
+		color: #e81b00; /* Table Heading Text Color */
+		font-weight: 500; /* Makes the header font bold */
+		padding-top: 20px;
+}
+
+#wrap #title {
+	font-family: 'Crock';
+	text-align:center;
+	font-size: 2.6vw;
+	margin-top: 10%;
+	color: white;
+}
+
+#wrap #title2 {
+		color: #ffffff; /* Table Heading Text Color */
+		font-weight: 500; /* Makes the header font bold */
+		font-size: 1.2vw;
+		font-family: 'Crock';
+		padding-top: 30px;
+}
+
+.wanted1  {color: #FFF7A3;}
+.wanted2  {color: #FFF26E;}
+.wanted3  {color: #FFE800;}
+.wanted4  {color: #FFD163;}
+.wanted5  {color: #FFB400;}
+.wanted6  {color: #FFA000;}
+.wanted7  {color: #FF8B00;}
+.wanted8  {color: #FF8100;}
+.wanted9  {color: #FF6700;}
+.wanted10 {color: #FF4300;}
+.mw       {color: #FF0000;}
+.lawman   {color: #007CFF;}
+.wflash {
+  animation-duration: 400ms;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}

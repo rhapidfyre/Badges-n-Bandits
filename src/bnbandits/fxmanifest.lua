@@ -24,7 +24,9 @@ server_scripts {
 ui_page "nui/ui.html"
 
 file {
-	"nui/ui.css", "nui/hud.css", "nui/motd.css", "nui/creator.css", "nui/wanted.css",
+  "nui/img/bgPanel.png",
+  "nui/crock.ttf",
+	"nui/ui.css", "nui/hud.css", "nui/creator.css", "nui/scores.css", "nui/wanted.css",
 	"nui/ui.js",	"nui/ui.html"
 }
 
