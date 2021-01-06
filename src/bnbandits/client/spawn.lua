@@ -36,9 +36,35 @@ function RespawnPlayer(usePos)
 end
 
 
+local justDied = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
+    
+    if not justDied and IsPlayerDead(PlayerId()) then
+      justDied = true
+      local killer = GetPedSourceOfDeath(PlayerPedId())
+      if DoesEntityExist(killer) then 
+        if IsEntityAPed(killer) then 
+          if IsPedAPlayer(killer) then 
+            local plyr = 0
+            local plyrs = GetActivePlayers()
+            for _,i in ipairs(plyrs) do
+              if GetPlayerPed(i) == killer then 
+                plyr = i
+                break
+              end
+            end
+            if plyr > 0 then
+              print("DEBUG - Murdered by Player #"..GetPlayerServerId(plyr))
+              TriggerServerEvent('bb:murder', GetPlayerServerId(plyr))
+            else print("DEBUG - Unable to identify murderer.")
+            end
+          end
+        end
+      end
+    end
+    
 		while IsPlayerDead(PlayerId()) do
     
       local ePressed = false
@@ -53,6 +79,7 @@ Citizen.CreateThread(function()
 				DisplayHud(false)
 				DisplayRadar(false)
 				--exports.spawnmanager:setAutoSpawn(false)
+        
 			end
       
 			while not ePressed do
@@ -63,6 +90,7 @@ Citizen.CreateThread(function()
       
 			ePressed = false
 			RespawnPlayer()
+      justDied = false
       
 		end
 	end

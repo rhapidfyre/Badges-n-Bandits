@@ -13,6 +13,7 @@ function BB.UninitializePlayer(client)
     if Config.debugging then print((BB.Player[client].I).." has been uninitialized.") end
   end
   BB.Player[client] = nil
+  --TriggerClientEvent('bb:delPlayer', (-1), client)
 end
 
 

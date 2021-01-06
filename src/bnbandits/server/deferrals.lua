@@ -40,6 +40,7 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
   )
   
   if uid > 0 then
+  
     deferrals.update("Evaluating your credentials...")
     ConsolePrint("^3DEFERRALS: ^7Validating "..playerName.."'s access rights.")
     Wait(500)
@@ -71,10 +72,18 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
       end
 
     end
-
-    deferrals.update("Authorized. Welcome back, "..playerName)
-    Citizen.Wait(100)
-    ConsolePrint(playerName.." is connecting!")
+    
+    if banInfo[1]['perms'] > 0 then
+      deferrals.update("Authorized. Welcome back, "..playerName)
+      Citizen.Wait(100)
+      ConsolePrint(playerName.." is connecting!")
+    
+    else
+      deferrals.done("Sorry, but the server is only open to Server Staff during development.")
+      ConsolePrint(playerName.." was rejected (Not Server Staff).")
+      return false
+      
+    end
     
   elseif uid < 0 then 
     deferrals.update("Preparing account for first time player...")

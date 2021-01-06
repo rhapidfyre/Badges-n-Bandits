@@ -101,8 +101,16 @@ AddEventHandler('bb:init', function()
     )
     DropPlayer(client, "Invalid Initialization.")
   end
+  --TriggerClientEvent('bb:setPlayer', (-1), client, GetPlayerName(client))
   TriggerEvent('bb:initPlayer', client, BB.Player[client].unique, BB.Player[client].lastPos)
   TriggerClientEvent('bb:initPlayer', client, BB.Player[client].unique, BB.Player[client].lastPos)
+  local plyrNames = {}
+  local plys = GetPlayers()
+  for _,i in ipairs (plys) do 
+    plyrNames[tonumber(i)] = GetPlayerName(i)
+    print("Player #"..i..": "..GetPlayerName(i))
+  end
+  TriggerClientEvent('bb:player_names', (-1), plyrNames)
 end)
 
 

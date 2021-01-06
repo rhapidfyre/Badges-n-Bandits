@@ -5,6 +5,7 @@ BB.lawman   = {}
 BB.inmates  = {}
 BB.scores   = {}
 BB.admins   = {}
+BB.Players  = {}
 
 KEYS = {
   -- Letters
@@ -38,11 +39,13 @@ KEYS = {
   -- Symbol Keys
   ["RIGHTBRACKET"] = 0xA5BDCD3C,
   ["LEFTBRACKET"] = 0x430593AA,
+  
   -- Mouse buttons
   ["MOUSE1"] = 0x07CE1E61,
   ["MOUSE2"] = 0xF84FA74F,
   ["MOUSE3"] = 0xCEE12B50,
   ["MWUP"] = 0x3076E97C,
+  
   -- Modifier Keys
   ["CTRL"] = 0xDB096B85,
   ["TAB"] = 0xB238FE0B,
@@ -54,10 +57,12 @@ KEYS = {
   ["DEL"] = 0x4AF4D473,
   ["PGUP"] = 0x446258B6,
   ["PGDN"] = 0x3C3DD371,
+  
   -- Function Keys
   ["F1"] = 0xA8E3F467,
   ["F4"] = 0x1F6D95E5,
   ["F6"] = 0x3C0A40F2,
+  
   -- Number Keys
   ["1"] = 0xE6F612E4,
   ["2"] = 0x1CE6D9EB,
@@ -67,11 +72,13 @@ KEYS = {
   ["6"] = 0xA1FDE2A6,
   ["7"] = 0xB03A913B,
   ["8"] = 0x42385422,
+  
   -- Arrow Keys
   ["DOWN"] = 0x05CA7C52,
   ["UP"] = 0x6319DB71,
   ["LEFT"] = 0xA65EBAB4,
   ["RIGHT"] = 0xDEB34313,
+  
 }
 
 -- Used by main script loop(s) to ensure metatable is ready

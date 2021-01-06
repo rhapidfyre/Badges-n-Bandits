@@ -1,4 +1,7 @@
 
+RegisterNetEvent('bb:setPlayer')
+RegisterNetEvent('bb:delPlayer')
+
 -- This file contains all base gamemode operations (enable pvp, rich presence, exports, etc)
 RegisterCommand('menus', function()
   TriggerEvent('bb:nui_rescue')
@@ -32,6 +35,17 @@ Citizen.CreateThread(function()
     SetDiscordRichPresenceAssetSmallText("RedM: Badges n' Bandits") -- Small picture hover text
 		Citizen.Wait(300000) -- Update every 5 minutes
 	end
+end)
+
+
+AddEventHandler('bb:setPlayer', function(client, pName)
+  BB.Players[client] = {name = pName}
+  BB.Players[client].I = BB.Players[client].name .. " ("..client..") "
+end)
+
+
+AddEventHandler('bb:delPlayer', function(client)
+  BB.Players[client] = nil
 end)
 
 
