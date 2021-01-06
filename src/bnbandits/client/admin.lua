@@ -71,8 +71,7 @@ end)
 AddEventHandler('bbadmin:cl_giveweapon', function(weaponName, ammoCount)
   if source ~= "" then
     local weapon = GetHashKey(weaponName)
-    GiveWeaponToPed(PlayerPedId(),weapon,ammoCount,true,true)
-    GiveWeaponToPed(PlayerPedId(),weaponName,ammoCount,true,true)
+    GiveWeaponToPed_2(PlayerPedId(),weapon,ammoCount,true,true)
     --SetPedAmmo(PlayerPedId(), weapon, ammoCount)
     TriggerEvent('chat:addMessage', {color={255,255,0},multiline=true,args={
       "GIVEWEAPON", "An Admin has given you '"..weaponName.."'."

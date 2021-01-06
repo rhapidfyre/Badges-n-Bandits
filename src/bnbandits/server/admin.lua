@@ -136,6 +136,7 @@ AddEventHandler('bbadmin:giveweapon', function(target, weapon, ammoCount)
     end
     
     if not ammoCount then ammoCount = 48 end
+    print("Args:", target, weapon, ammoCount)
     TriggerClientEvent('bbadmin:cl_giveweapon', target, weapon, ammoCount)
     
   end
