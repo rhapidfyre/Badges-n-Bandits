@@ -1,4 +1,8 @@
 
+-- The highest wanted level for a non-felony charge
+local misdemeanorCap = 6
+
+
 function BB.WantedLevel(client)
   if not BB.wanted[client] then BB.wanted[client] = 0 end
   if Config.debugging then
@@ -47,14 +51,29 @@ function BB.SetWanted(client, wPoints)
 end
 
 
-function BB.IncreaseWantedPoints(client, wPoints)
+function BB.IncreaseWantedPoints(client, wPoints, isFelony)
   if not BB.wanted[client] then BB.wanted[client] = 0 end
   if not wPoints then wPoints = 1 end
   if wPoints < 1 then wPoints = 1 end
   if wPoints > 0 then
     local oldMW     = BB.MostWanted()
     local oldWanted = BB.WantedLevel(client)
-    BB.wanted[client] = oldWanted + wPoints
+    
+    -- Wanted Points Formula:
+    -- Steps through one point at a time to calculate weight of each point
+    for i = 1, wPoints do
+      local x         = BB.wanted[client] + 1
+      local weighted  = (100 * ( (0.997)^x )) / 100
+      -- Disallow calculation if it would cause the wanted level to increase for a non-felony
+      if math.ceil(weighted / Config.levelDivision) < misdemeanorCap then
+        BB.wanted[client] = weighted
+      else
+        ConsolePrint(BB.Player[client].I..": Calculation of non-felony crime would exceed the misdemeanor cap.")
+        i = #wPoints + 1 -- End Loop
+        break -- For good measure
+      end
+    end
+    
     local newWanted = BB.WantedLevel(client)
     TriggerEvent('bb:wanted_points', client, BB.wanted[client])
     TriggerClientEvent('bb:wanted_points', (-1), client, BB.wanted[client])
