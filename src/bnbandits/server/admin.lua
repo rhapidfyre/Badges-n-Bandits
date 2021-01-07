@@ -6,6 +6,65 @@ RegisterServerEvent('bbadmin:mypos')
 RegisterServerEvent('bbadmin:giveweapon')
 
 
+
+function DebugLoadModel(client)
+  local modelInfo = BB.SQL.QUERY(
+    "SELECT id,model,hashkey FROM models WHERE handled = 0 AND processing = 0"
+  )
+  if modelInfo[1] then
+    BB.SQL.QUERY("UPDATE models SET processing = 1 WHERE id = @i",
+      {['i'] = modelInfo[1]['id']}
+    )
+    ConsolePrint("^2Processing Model '"..modelInfo[1]['model'].."' ("..modelInfo[1]['hashkey']..")")
+    TriggerClientEvent('bbdebug:setmodel', client, modelInfo[1])
+  else
+    ConsolePrint("^1There are no models left to handle.")
+    TriggerClientEvent('chat:addMessage', client, {color={255,180,0},multiline=true,args={
+      "FINISHED", "There are no models left to verify."
+    }})
+  end
+end
+RegisterServerEvent('bbdebug:getmodel')
+AddEventHandler('bbdebug:getmodel', function()
+  DebugLoadModel(source)
+end)
+RegisterServerEvent('bbdebug:lawman')
+AddEventHandler('bbdebug:lawman', function(idModel)
+  local client = source
+  BB.SQL.QUERY(
+    "UPDATE models SET lawman = 1, handled = 1 WHERE id = @i",
+    {['i'] = idModel}
+  )
+  DebugLoadModel(client)
+end)
+RegisterServerEvent('bbdebug:banskin')
+AddEventHandler('bbdebug:banskin', function(idModel)
+  local client = source
+  BB.SQL.QUERY(
+    "UPDATE models SET admin = 1, handled = 1 WHERE id = @i",
+    {['i'] = idModel}
+  )
+  DebugLoadModel(client)
+end)
+RegisterServerEvent('bbdebug:nextskin')
+AddEventHandler('bbdebug:nextskin', function(idModel)
+  local client = source
+  BB.SQL.QUERY(
+    "UPDATE models SET handled = 1 WHERE id = @i",
+    {['i'] = idModel}
+  )
+  DebugLoadModel(client)
+end)
+
+
+
+
+
+
+
+
+
+
 --- BlockAction()
 -- Blocks the action attempt if affected admin is equal or greater rank
 -- @return True if the action should be blocked/stopped
@@ -81,6 +140,14 @@ AddEventHandler('bbadmin:teleport', function(tpType, data)
         ") teleported to X:"..(string.format("%.2f", data.x))..
         ", Y:"..(string.format("%.2f", data.y)), 2
       )
+    elseif tpType == 'player' then
+      if GetPlayerName(data) then 
+        TriggerClientEvent('bbadmin:cl_teleport', client, tpType, data)
+      else
+        TriggerEvent('chat:addMessage', {color={255,0,0},multiline=true,args={
+          "INVALID PLAYER", "Player ID "..tostring(data).." does not exist or has disconnected."
+        }})
+      end
     end
     TriggerClientEvent('bbadmin:cl_teleport', client, tpType, data)
   else print("DEBUG - Command denied for player #"..client)

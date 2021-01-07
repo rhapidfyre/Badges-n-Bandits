@@ -23,6 +23,7 @@ function RespawnPlayer(usePos)
   NetworkResurrectLocalPlayer(findSpawn.x, findSpawn.y, findSpawn.z, math.random(359))
   local ped = PlayerPedId()
   SetEntityCoordsNoOffset(ped, findSpawn.x, findSpawn.y, findSpawn.z, false, false, false, true)
+  BB.Player.dead = false
   FreezeEntityPosition(ped, false)
   SetPlayerInvincible(ped, false)
   SetEntityVisible(ped, true)
@@ -33,16 +34,42 @@ function RespawnPlayer(usePos)
     DoScreenFadeIn(600)
     while IsScreenFadedOut() do Wait(100) end
   end
+  DisplayHud(true)
+  DisplayRadar(true)
 end
 
 
-local justDied = false
-Citizen.CreateThread(function()
+AddEventHandler('bb:initPlayer', function(idUnique, lastPosition)
+  if lastPosition then
+    if Config.debugging then print("Restoring previous location.") end
+    if type(lastPosition) == "table" then 
+      if Config.debugging then
+        print("Last known position was a table. Vectorizing...")
+      end
+      local temp = vector3(lastPosition.x, lastPosition.y, lastPosition.z)
+      lastPosition = temp
+    elseif type(lastPosition) ~= "vector3" then
+      if Config.debugging then
+        print("Last known location was invalid. Ignoring.")
+      end
+      lastPosition = nil
+    end
+  else
+    if Config.debugging then print("No previous location found.") end
+  end
+  
+  BB.Initialize(idUnique)
+  RespawnPlayer(lastPosition)
+  
+  TriggerEvent('bb:loaded')
+  TriggerServerEvent('bb:loaded')
+  
 	while true do
 		Citizen.Wait(0)
     
-    if not justDied and IsPlayerDead(PlayerId()) then
-      justDied = true
+    if not BB.Player.dead and IsPlayerDead(PlayerId()) then
+    
+      BB.Player.dead = true
       local killer = GetPedSourceOfDeath(PlayerPedId())
       if DoesEntityExist(killer) then 
         if IsEntityAPed(killer) then 
@@ -66,7 +93,7 @@ Citizen.CreateThread(function()
     end
     
 		while IsPlayerDead(PlayerId()) do
-    
+      print(GetGameTimer().." - DEAD")
       local ePressed = false
 			Citizen.Wait(0)
 			local timer = GetGameTimer() + 5000
@@ -90,34 +117,10 @@ Citizen.CreateThread(function()
       
 			ePressed = false
 			RespawnPlayer()
-      justDied = false
       
 		end
 	end
-end)
-
-AddEventHandler('bb:initPlayer', function(idUnique, lastPosition)
-  if lastPosition then
-    if Config.debugging then print("Restoring previous location.") end
-    if type(lastPosition) == "table" then 
-      if Config.debugging then
-        print("Last known position was a table. Vectorizing...")
-      end
-      local temp = vector3(lastPosition.x, lastPosition.y, lastPosition.z)
-      lastPosition = temp
-    elseif type(lastPosition) ~= "vector3" then
-      if Config.debugging then
-        print("Last known location was invalid. Ignoring.")
-      end
-      lastPosition = nil
-    end
-  else
-    if Config.debugging then print("No previous location found.") end
-  end
-  RespawnPlayer(lastPosition)
-  BB.Initialize(idUnique)
-  TriggerEvent('bb:loaded')
-  TriggerServerEvent('bb:loaded')
+  
 end)
 
 AddEventHandler('bb:respawn', RespawnPlayer)

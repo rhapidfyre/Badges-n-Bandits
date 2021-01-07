@@ -12,13 +12,25 @@ dependency 'ghmattimysql'
 resource_type 'gametype' { name = 'Badges & Bandits'}
 
 client_scripts {
-  "ent_enum.lua","client/lib/*.lua","client/lang/*.lua","client/*.lua"
+  "ent_enum.lua",
+  "client/lib/init.lua",
+  "client/lib/blips.lua",
+  "client/lib/player.lua",
+  "client/lang/*.lua",
+  "client/*.lua"
 }
 shared_scripts {
-  "config.lua","shared/lib/*.lua","shared/lang/*.lua","shared/*.lua"
+  "config.lua",
+  "shared/lib/init.lua",
+  "shared/lang/*.lua",
+  "shared/*.lua"
 }
 server_scripts {
-  "server/lib/*.lua","server/lang/*.lua","server/*.lua"
+  "server/lib/init.lua",
+  "server/lib/crimes.lua",
+  "server/lib/player.lua",
+  "server/lang/*.lua",
+  "server/*.lua"
 }
 
 ui_page "nui/ui.html"

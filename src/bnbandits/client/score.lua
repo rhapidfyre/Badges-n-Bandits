@@ -78,29 +78,43 @@ AddEventHandler('bb:player_names', function(pList)
 end)
 
 
+local pBlips = {}
 function ShowPlayerBlips()
   --[[
   while true do
     local clients = GetActivePlayers()
+    local plyrs   = {}
     for _,i in ipairs (clients) do
       local ped = GetPlayerPed(i)
-      if ped ~= PlayerPedId() then
-        local temp = GetBlipFromEntity(ped)
-        if not DoesBlipExist(temp) then
-          local lTemp = Citizen.InvokeNative(0x23F74C2FDA6E7C61, GetHashKey(temp), ped)
-          --local lTemp = BlipAddForEntity(GetHashKey(temp), ped)
-          SetBlipSprite(temp, PLAYER_CIV)
-          print(temp, lTemp, ped)
-        end
-        if DoesBlipExist(temp) then
-          local wL = BB.WantedLevel(GetPlayerServerId(i))
-          if wL > 10 then SetBlipSprite(temp, PLAYER_MOSTWANTED)
-          elseif wL > 0 then SetBlipSprite(temp, PLAYER_WANTED)
-          else SetBlipSprite(temp, PLAYER_CIV)
+      --if ped ~= PlayerPedId() then
+        if DoesEntityExist(ped) then
+          local sv = GetPlayerServerId(i)
+          local pos = GetEntityCoords(ped)
+          if not DoesBlipExist(pBlips[sv]) then 
+            pBlips[sv] = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, pos.x, pos.y, pos.z)
+            --pBlips[sv] = Citizen.InvokeNative(0x23F74C2FDA6E7C61, 631964804, pos.x, pos.y, pos.z)
+            SetBlipSprite(pBlips[sv], PLAYER_CIV)
+          end
+          if DoesBlipExist(pBlips[sv]) then
+            plyrs[sv] = true
+            SetBlipCoords(pBlips[sv], pos.x, pos.y, pos.z)
+            local wL = BB.WantedLevel(sv)
+            if wL > 10 then SetBlipSprite(pBlips[sv], PLAYER_MOSTWANTED)
+            elseif wL > 0 then SetBlipSprite(pBlips[sv], PLAYER_WANTED)
+            else SetBlipSprite(pBlips[sv], PLAYER_CIV)
+            end
           end
         end
+      --end
+    end
+    
+    -- Remove players who are no longer active
+    for k,v in pairs (pBlips) do
+      if not plyrs[k] then
+        if DoesBlipExist(v) then RemoveBlip(v) end
       end
     end
+    
     Wait(100)
   end
   ]]
