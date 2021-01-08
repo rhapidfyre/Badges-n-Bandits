@@ -1,6 +1,7 @@
 
 RegisterNetEvent('bb:initPlayer')
 RegisterNetEvent('bnb:respawn')
+local respawnKey = 'E'
 
 function RespawnPlayer(usePos)
   local findSpawn = nil
@@ -64,55 +65,52 @@ AddEventHandler('bb:initPlayer', function(idUnique, lastPosition)
   TriggerEvent('bb:loaded')
   TriggerServerEvent('bb:loaded')
   
+  -- Check for Death
 	while true do
 		Citizen.Wait(0)
     
-    if not BB.Player.dead and IsPlayerDead(PlayerId()) then
+		while IsPlayerDead(PlayerId()) do
     
-      BB.Player.dead = true
-      local killer = GetPedSourceOfDeath(PlayerPedId())
-      if DoesEntityExist(killer) then 
-        if IsEntityAPed(killer) then 
-          if IsPedAPlayer(killer) then 
-            local plyr = 0
-            local plyrs = GetActivePlayers()
-            for _,i in ipairs(plyrs) do
-              if GetPlayerPed(i) == killer then 
-                plyr = i
-                break
+      local ePressed = false
+			Citizen.Wait(0)
+			local timer = GetGameTimer() + 5000
+      
+      -- Check if killed by a player
+      if not BB.Player.dead then
+        local killer = GetPedSourceOfDeath(PlayerPedId())
+        if DoesEntityExist(killer) then 
+          if IsEntityAPed(killer) then 
+            if IsPedAPlayer(killer) then 
+              local plyr = 0
+              local plyrs = GetActivePlayers()
+              for _,i in ipairs(plyrs) do
+                if GetPlayerPed(i) == killer then 
+                  plyr = i
+                  break
+                end
               end
-            end
-            if plyr > 0 then
-              print("DEBUG - Murdered by Player #"..GetPlayerServerId(plyr))
-              TriggerServerEvent('bb:murder', GetPlayerServerId(plyr))
-            else print("DEBUG - Unable to identify murderer.")
+              if plyr > 0 then
+                print("DEBUG - Murdered by Player #"..GetPlayerServerId(plyr))
+                TriggerServerEvent('bb:murder', GetPlayerServerId(plyr))
+              else print("DEBUG - Unable to identify murderer.")
+              end
             end
           end
         end
       end
-    end
     
-		while IsPlayerDead(PlayerId()) do
-      print(GetGameTimer().." - DEAD")
-      local ePressed = false
-			Citizen.Wait(0)
-			local timer = GetGameTimer() + 5000
 			while timer >= GetGameTimer() do
-				alive = false
 				Citizen.Wait(0)
 				DrawRect(0.50, 0.475, 1.0, 0.22, 1, 1, 1, 100, true, true)
 				DrawTxt("YOU HAVE DIED", 0.50, 0.40, 1.0, 1.0, true, 161, 3, 0, 255, true)
-        if Config.debugging then print("PLAYER IS DEAD") end
 				DisplayHud(false)
 				DisplayRadar(false)
-				--exports.spawnmanager:setAutoSpawn(false)
-        
 			end
       
-			while not ePressed do
+			while not ePressed do 
 				Wait(0)
-				DrawTxt("Dead - Press E to Respawn", 0.50, 0.40, 1.0, 1.0, true, 161, 3, 0, 255, true)
-				if IsControlJustReleased(0, 0xDFF812F9) then ePressed = true end
+				DrawTxt("Dead - Press "..respawnKey.." to Respawn", 0.50, 0.40, 1.0, 1.0, true, 161, 3, 0, 255, true)
+				if IsControlJustReleased(0, KEYS[respawnKey]) then ePressed = true end
 			end
       
 			ePressed = false
