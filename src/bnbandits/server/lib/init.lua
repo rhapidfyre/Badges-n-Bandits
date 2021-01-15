@@ -51,5 +51,34 @@ BB.SQL = {
     end
 }
 
+
+function BB.InitializePlayer(client)
+  if not client then
+    return false, "No ID given to InitializePlayer()"
+  end
+  
+  local idUnique = UniqueId(client)
+  BB.Player[client].I = GetPlayerName(client).." ("..client..")"
+  
+  -- If UID does not exist, return a single playable session
+  if not idUnique then return true, 0 end
+  
+  local lastPos = BB.SQL.QUERY(
+    "SELECT x,y,z FROM characters WHERE id = @u",{['u'] = idUnique}
+  )
+  if lastPos[1] then
+    if Config.verbose then
+      ConsolePrint("Restored previous location for "..(BB.Player[client].I))
+    end
+    local prevPosition = vector3(lastPos[1]['x'],lastPos[1]['y'],lastPos[1]['z'])
+    BB.Player[client].lastPos = prevPosition
+  else
+    if Config.verbose then ConsolePrint("No previous position found for "..(BB.Player[client].I)) end
+  end
+  
+  return true, idUnique
+end
+
+
 -- Used by main script loop(s) to ensure metatable is ready
 BB.ready  = true

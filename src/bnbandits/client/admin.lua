@@ -3,17 +3,6 @@ RegisterNetEvent('bbadmin:assigned')
 RegisterNetEvent('bbadmin:cl_teleport')
 RegisterNetEvent('bbadmin:cl_giveweapon')
 
-LoadModel = function(model)
-  if not IsModelInCdimage(model) then
-      return false
-  end
-  while not HasModelLoaded(model) do
-    RequestModel(model)
-    Wait(1)
-  end
-  return true
-end
-
 
 local function FindZCoord(coord, ent)
   local zFound, zCoord

@@ -1,5 +1,17 @@
 
 
+function LoadModel(model)
+  if not IsModelInCdimage(model) then
+      return false
+  end
+  while not HasModelLoaded(model) do
+    RequestModel(model)
+    Wait(1)
+  end
+  return true
+end
+
+
 function DrawTxt(str, x, y, w, h, enableShadow, col1, col2, col3, a, centre)
     local str = CreateVarString(10, "LITERAL_STRING", str)
     SetTextScale(w, h)

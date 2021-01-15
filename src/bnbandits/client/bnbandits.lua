@@ -10,7 +10,9 @@ end)
 
 --  Independent startup stuff (init/no dependency)
 Citizen.CreateThread(function()
-  
+    
+  SetNuiFocus(false) -- Rescue on gamemode reload
+    
   -- Enable PVP
   Citizen.Wait(1000) 
   Citizen.InvokeNative(0xF808475FA571D823, true)
@@ -28,7 +30,7 @@ Citizen.CreateThread(function()
   
   -- Discord  Rich Presence
 	while true do
-		SetDiscordAppId(611712266164895744) -- Discord app id
+		SetDiscordAppId(602957874259296256) -- Discord app id
 		SetDiscordRichPresenceAsset("RedM: Badges & Bandits") -- Big picture asset name
     SetDiscordRichPresenceAssetText("RedM: Badges & Bandits") -- Big picture hover text
     SetDiscordRichPresenceAssetSmall('bb_logo') -- Small picture asset name
