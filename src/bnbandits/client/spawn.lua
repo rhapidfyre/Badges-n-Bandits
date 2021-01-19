@@ -171,7 +171,7 @@ RegisterNUICallback('CharacterCreator', function(data)
     elseif data.prevModel then
       TriggerServerEvent('bb:model_choice', myGender, currModel, (-1))
     elseif data.swapGender then
-      if myGender = 1 then myGender = 0
+      if myGender == 1 then myGender = 0
       else myGender = 1
       end
     end
