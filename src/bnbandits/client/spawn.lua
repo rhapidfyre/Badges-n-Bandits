@@ -121,6 +121,12 @@ AddEventHandler('bb:respawn', RespawnPlayer)
   TEMPORARY CHARACTER CREATOR
 ]]
 
+local creator = {
+  posn = vector3(-5428.24, -2262.03, 27.77),
+  head = 10.0,
+  horse = vector3(-5431.71, -2263.18, 27.84),
+  hhead = 305.0,
+}
 
 local currModel = 1
 local myGender  = 1

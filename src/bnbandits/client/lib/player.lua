@@ -1,12 +1,4 @@
 
-local creator = {
-  posn = vector3(-5428.24, -2262.03, 27.77),
-  head = 10.0,
-  horse = vector3(-5431.71, -2263.18, 27.84),
-  hhead = 305.0,
-}
-
-
 function BB.Initialize(metaData)
   if not metaData then return false end
   if not metaData[1] then return false end
