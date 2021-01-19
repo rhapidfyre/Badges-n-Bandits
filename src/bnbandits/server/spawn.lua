@@ -15,12 +15,20 @@ AddEventHandler('bb:model_choice', function(pGender, mNumber, dir)
   
   -- Initializes models on first load
   if #mChoices[1] < 1 then 
-    mChoices[1] = BB.SQL.QUERY(
+    local males = BB.SQL.QUERY(
       "SELECT * FROM models WHERE female = 0 AND `admin` = 0 AND lawman = 0"
     )
-    mChoices[0] = BB.SQL.QUERY(
+    local females = BB.SQL.QUERY(
       "SELECT * FROM models WHERE female = 1 AND `admin` = 0 AND lawman = 0"
     )
+    for k,v in pairs (males) do
+      local n = #mChoices[1]
+      mChoices[1][n] = v['model']
+    end
+    for k,v in pairs (females) do
+      local n = #mChoices[0]
+      mChoices[0][n] = v['model']
+    end
   end
   
   if not dir then dir = 0 end
