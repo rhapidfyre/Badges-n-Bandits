@@ -22,11 +22,11 @@ AddEventHandler('bb:model_choice', function(pGender, mNumber, dir)
       "SELECT hashkey FROM models WHERE female = 1 AND `admin` = 0 AND lawman = 0"
     )
     for k,v in pairs (males) do
-      local n = #mChoices[1]
+      local n = #mChoices[1] + 1
       mChoices[1][n] = (v['hashkey'])
     end
     for k,v in pairs (females) do
-      local n = #mChoices[2]
+      local n = #mChoices[2] + 1
       mChoices[2][n] = (v['hashkey'])
     end
   end
