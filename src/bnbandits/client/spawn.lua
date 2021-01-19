@@ -48,11 +48,10 @@ end
 -- Also starts death/respawn checking loop functions
 AddEventHandler('bb:initPlayer', function(metaData)
 
-  RespawnPlayer(metaData[2])
-  
   -- If character initializes, run stuff
   if BB.Initialize(metaData) then
 
+    RespawnPlayer(metaData[2])
     TriggerEvent('bb:loaded')
     TriggerServerEvent('bb:loaded')
   
@@ -109,6 +108,7 @@ AddEventHandler('bb:initPlayer', function(metaData)
   
       end
     end
+  else RespawnPlayer()
   end
   
 end)
