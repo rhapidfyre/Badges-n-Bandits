@@ -64,15 +64,15 @@ $(function() {
 });
 
 function ExitMenu() {
-	$.post('http://bnbandits/MainMenu', JSON.stringify({exit:true}));
+	$.post('https://bnbandits/MainMenu', JSON.stringify({exit:true}));
 }
 
 function SetModel(mValue) {
-	if (mValue == 1)      $.post('http://bnbandits/CharacterCreator', JSON.stringify({prevModel:true}));
-	else if (mValue == 2) $.post('http://bnbandits/CharacterCreator', JSON.stringify({nextModel:true}));
-	else if (mValue == 2) $.post('http://bnbandits/CharacterCreator', JSON.stringify({swapGender:true}));
+	if (mValue == 1)      $.post('https://bnbandits/CharacterCreator', JSON.stringify({prevModel:true}));
+	else if (mValue == 2) $.post('https://bnbandits/CharacterCreator', JSON.stringify({nextModel:true}));
+	else if (mValue == 2) $.post('https://bnbandits/CharacterCreator', JSON.stringify({swapGender:true}));
 }
 
 function SelectModel() {
-	$.post('http://bnbandits/CharacterCreator', JSON.stringify({select:true}));
+	$.post('https://bnbandits/CharacterCreator', JSON.stringify({select:true}));
 }
