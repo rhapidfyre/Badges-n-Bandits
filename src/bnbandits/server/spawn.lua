@@ -34,13 +34,15 @@ AddEventHandler('bb:model_choice', function(pGender, mNumber, dir)
   if not dir then dir = 0 end
   mNumber = mNumber + dir
   if      mNumber > #mChoices[pGender]  then mNumber = 1
-  elseif  mNumber < 1                   then mNumber = #mChoices[pGender+1]
+  elseif  mNumber < 1                   then mNumber = #mChoices[pGender]
   end
   
   print(pGender,mNumber,dir)
-  print(mChoices[pGender+1])
-  print(mChoices[pGender+1][mNumber])
-  TriggerClientEvent('bb:creator_model', client, mChoices[pGender+1][mNumber], mNumber)
+  print(mChoices[pGender])
+  print(#mChoices[pGender])
+  print(json.encode(mChoices[pGender]))
+  print(mChoices[pGender][mNumber])
+  TriggerClientEvent('bb:creator_model', client, mChoices[pGender][mNumber], mNumber)
   
 end)
 
