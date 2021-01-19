@@ -16,17 +16,17 @@ AddEventHandler('bb:model_choice', function(pGender, mNumber, dir)
   -- Initializes models on first load
   if #mChoices[1] < 1 then 
     local males = BB.SQL.QUERY(
-      "SELECT * FROM models WHERE female = 0 AND `admin` = 0 AND lawman = 0"
+      "SELECT hashkey FROM models WHERE female = 0 AND `admin` = 0 AND lawman = 0"
     )
     local females = BB.SQL.QUERY(
-      "SELECT * FROM models WHERE female = 1 AND `admin` = 0 AND lawman = 0"
+      "SELECT hashkey FROM models WHERE female = 1 AND `admin` = 0 AND lawman = 0"
     )
     for k,v in pairs (males) do
       local n = #mChoices[1]
       mChoices[1][n] = (v['hashkey'])
     end
     for k,v in pairs (females) do
-      local n = #mChoices[0]
+      local n = #mChoices[2]
       mChoices[2][n] = (v['hashkey'])
     end
   end
@@ -36,12 +36,7 @@ AddEventHandler('bb:model_choice', function(pGender, mNumber, dir)
   if      mNumber > #mChoices[pGender]  then mNumber = 1
   elseif  mNumber < 1                   then mNumber = #mChoices[pGender+1]
   end
-  print(
-    pGender+1, mNumber, dir,
-    mChoices[pGender+1], mChoices[pGender+1][mNumber],
-    #mChoices[pGender+1]
   
-  )
   TriggerClientEvent('bb:creator_model', client, mChoices[pGender+1][mNumber], mNumber)
   
 end)
