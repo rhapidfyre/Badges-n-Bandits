@@ -70,7 +70,7 @@ function ExitMenu() {
 function SetModel(mValue) {
 	if (mValue == 1)      $.post('https://bnbandits/CharacterCreator', JSON.stringify({prevModel:true}));
 	else if (mValue == 2) $.post('https://bnbandits/CharacterCreator', JSON.stringify({nextModel:true}));
-	else if (mValue == 2) $.post('https://bnbandits/CharacterCreator', JSON.stringify({swapGender:true}));
+	else $.post('https://bnbandits/CharacterCreator', JSON.stringify({swapGender:true}));
 }
 
 function SelectModel() {

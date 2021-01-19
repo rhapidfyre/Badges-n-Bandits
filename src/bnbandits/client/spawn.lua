@@ -164,7 +164,7 @@ RegisterNetEvent('bb:creator_model', function(modelHash, mNumber)
 end)
 
 RegisterNUICallback('CharacterCreator', function(data)
-
+  print("DEBUGGING - ", json.encode(data))
   if data.select then
   
     SendNUIMessage({hidemenu = 'creator-main'})
