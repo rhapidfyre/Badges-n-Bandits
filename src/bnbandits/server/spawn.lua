@@ -5,8 +5,8 @@ RegisterServerEvent('bb:create_character')
 RegisterServerEvent('bb:model_choice')
 
 local mChoices = {
-  [0] = {}, -- females
   [1] = {}  -- males
+  [2] = {}, -- females
 }
 
 AddEventHandler('bb:model_choice', function(pGender, mNumber, dir)
@@ -23,21 +23,26 @@ AddEventHandler('bb:model_choice', function(pGender, mNumber, dir)
     )
     for k,v in pairs (males) do
       local n = #mChoices[1]
-      mChoices[1][n] = v['model']
+      mChoices[1][n] = (v['hashkey'])
     end
     for k,v in pairs (females) do
       local n = #mChoices[0]
-      mChoices[0][n] = v['model']
+      mChoices[2][n] = (v['hashkey'])
     end
   end
   
   if not dir then dir = 0 end
   mNumber = mNumber + dir
   if      mNumber > #mChoices[pGender]  then mNumber = 1
-  elseif  mNumber < 1                   then mNumber = #mChoices[pGender]
+  elseif  mNumber < 1                   then mNumber = #mChoices[pGender+1]
   end
-  print(pGender, mNumber, dir, mChoices[pGender], mChoices[pGender][mNumber])
-  TriggerClientEvent('bb:creator_model', client, mChoices[pGender][mNumber], mNumber)
+  print(
+    pGender+1, mNumber, dir,
+    mChoices[pGender+1], mChoices[pGender+1][mNumber],
+    #mChoices[pGender+1]
+  
+  )
+  TriggerClientEvent('bb:creator_model', client, mChoices[pGender+1][mNumber], mNumber)
   
 end)
 
