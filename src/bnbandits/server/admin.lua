@@ -6,7 +6,7 @@ RegisterServerEvent('bbadmin:mypos')
 RegisterServerEvent('bbadmin:giveweapon')
 
 
-
+--[[
 function DebugLoadModel(client)
   local modelInfo = BB.SQL.QUERY(
     "SELECT id,model,hashkey FROM models WHERE handled = 0 AND processing = 0"
@@ -55,7 +55,7 @@ AddEventHandler('bbdebug:nextskin', function(idModel)
   )
   DebugLoadModel(client)
 end)
-
+]]
 
 
 

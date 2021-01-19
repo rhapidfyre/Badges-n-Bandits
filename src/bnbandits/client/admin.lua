@@ -19,7 +19,7 @@ local function FindZCoord(coord, ent)
   return zCoord
 end
 
-
+--[[
 RegisterCommand('comps', function(s,a,r)
   local ped = PlayerPedId()
   print(Citizen.InvokeNative(0x90403E8107B60E81, ped))
@@ -116,7 +116,7 @@ Citizen.CreateThread(function()
 end)
 
 
-
+]]
 ---------- END OF DEBUG FUNCTIONS
 
 

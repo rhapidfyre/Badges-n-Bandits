@@ -36,8 +36,8 @@ $(function() {
 
 		var item = event.data;
 
-		if (item.showmenu) { hud.show(); }
-		if (item.hidemenu) { hud.hide(); }
+		if (item.showmenu) { $('#'+item.showmenu).show(); }
+		if (item.hidemenu) { $('#'+item.showmenu).hide(); }
     if (item.wanted)   wantedBanner(item.wanted);
 
     if (item.showscores)
@@ -65,4 +65,14 @@ $(function() {
 
 function ExitMenu() {
 	$.post('http://bnbandits/MainMenu', JSON.stringify({exit:true}));
+}
+
+function SetModel(mValue) {
+	if (mValue == 1)      $.post('http://bnbandits/CharacterCreator', JSON.stringify({prevModel:true}));
+	else if (mValue == 2) $.post('http://bnbandits/CharacterCreator', JSON.stringify({nextModel:true}));
+	else if (mValue == 2) $.post('http://bnbandits/CharacterCreator', JSON.stringify({swapGender:true}));
+}
+
+function SelectModel() {
+	$.post('http://bnbandits/CharacterCreator', JSON.stringify({select:true}));
 }

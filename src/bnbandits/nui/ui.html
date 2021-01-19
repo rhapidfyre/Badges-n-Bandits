@@ -12,12 +12,48 @@
     <div id="wants-top"> &nbsp; </div>
     <div id="wants-btm"> &nbsp; </div>
   </div>
+  
 	<div style="display: none;" id="wrap">
 		<center><h2 id="title">Badges n' Bandits</h2></center>
 		<center><h2 id="title2">PLAYERS</h2></center>
 		<table id="player_table" width="100%">
 		</table>
 	</div>
+  
+  <div id="creator-main" style="display: none;">
+    <div id="creator-info">
+      <h3>BADGES N BANDITS</h3>
+      <h5><i>Cops &amp; Robbers for RedM</i></h5>
+      <p>Welcome to Badges n' Bandits!</p>
+      <p>Shootouts, stagecoach robberies and bank hiests. The only
+      thing more dangerous than the Wild West is not playing
+      RedM often enough to make your own legacy. Will you pull off
+      the biggest heist in history, or will you hogtie the highest
+      bounty the Sheriff has to offer? Only you can decide.</p>
+      <p>Welcome to the <strong>temporary</strong> character
+      creator. This creator is made with quick selection in mind,
+      so you can get into the game faster, and I can spend more time
+      scripting the stuff that actually matters.</p>
+      <p>You will be able to change your model at any
+      outfitter, tailor, or camp. A better character creator including
+      customization will be available as a feature at a later time.</p>
+      <p>Now 'git on out there and make do with whatcha got, and don'
+      forgit to saddle your horse.</p>
+    </div>
+    <div id="creator-ctrl">
+      <table>
+        <tr><th>PREV</th><th>GENDER</th><th>NEXT</th></tr>
+        <tr>
+          <td><button onclick="SetModel(1)">&lt;&lt;</button></td>
+          <td><button onclick="SetModel(0)">CHANGE</button></td>
+          <td><button onclick="SetModel(2)">&gt;&gt;</button></td>
+        </tr>
+        <tr>
+          <td colspan="3"><button onclick="SelectModel()">CONFIRM MODEL</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
     
 </body>
 </html>

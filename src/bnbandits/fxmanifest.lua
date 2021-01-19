@@ -19,12 +19,14 @@ client_scripts {
   "client/lang/*.lua",
   "client/*.lua"
 }
+
 shared_scripts {
   "config.lua",
   "shared/lib/init.lua",
   "shared/lang/*.lua",
   "shared/*.lua"
 }
+
 server_scripts {
   "server/lib/init.lua",
   "server/lib/crimes.lua",
