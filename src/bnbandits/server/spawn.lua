@@ -63,9 +63,12 @@ AddEventHandler('bb:init', function()
   
   local metaTable = {
     [1] = BB.Player[client].unique,
-    [2] = BB.Player[client].lastPos,
-    [3] = charInfo[1]['model'],
+    [2] = BB.Player[client].lastPos
   }
+  if charInfo[1] then 
+    metaTable[3] = charInfo[1]['model']
+  end
+  
   
   TriggerEvent('bb:initPlayer', client, metaTable)
   TriggerClientEvent('bb:initPlayer', client, metaTable)
