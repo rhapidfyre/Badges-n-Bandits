@@ -58,7 +58,7 @@ AddEventHandler('bb:init', function()
   
   local charInfo = BB.SQL.QUERY(
     "SELECT * FROM characters WHERE idUnique = @u ORDER BY created DESC LIMIT 1",
-    {['u'] = BB.Players[client].unique}
+    {['u'] = BB.Player[client].unique}
   )
   
   local metaTable = {
@@ -114,12 +114,12 @@ AddEventHandler('bb:create_character', function(pGender, modelChoice)
     )
     local charInfo = BB.SQL.QUERY(
       "SELECT * FROM characters WHERE idUnique = @u ORDER BY created DESC LIMIT 1",
-      {['u'] = BB.Players[client].unique}
+      {['u'] = BB.Player[client].unique}
     )
   
     local charInfo = BB.SQL.QUERY(
       "SELECT * FROM characters WHERE idUnique = @u ORDER BY created DESC LIMIT 1",
-      {['u'] = BB.Players[client].unique}
+      {['u'] = BB.Player[client].unique}
     )
     
     local metaTable = {
