@@ -5,7 +5,7 @@ RegisterServerEvent('bb:create_character')
 RegisterServerEvent('bb:model_choice')
 
 local mChoices = {
-  [1] = {}  -- males
+  [1] = {},  -- males
   [2] = {}, -- females
 }
 
